@@ -23,7 +23,9 @@ export class CountrySearchComponent implements OnInit {
   search(term: string): void {
     this.searchTerm = term;
 
-    this.getResult(this.searchTerm);
+    if (this.searchTerm !== '') {
+      this.getResult(this.searchTerm);
+    }
   }
 
   getResult(term: string) {
