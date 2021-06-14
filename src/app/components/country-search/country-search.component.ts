@@ -16,7 +16,7 @@ export class CountrySearchComponent implements OnInit {
   constructor(private timezoneService: TimezoneService) { }
 
   ngOnInit(): void {
-    this.searchTerm = "Africa/Lagos"
+    this.searchTerm = "Nigeria"
     this.getResult(this.searchTerm);
   }
 

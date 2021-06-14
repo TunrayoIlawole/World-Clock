@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Timezone } from '../Timezone';
+import data from 'data.json';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,15 @@ export class TimezoneService {
 
   constructor(private http: HttpClient) { }
 
-  getTimezone(country: string): Observable<Timezone> {
-    const url = `${this.apiUrl}&zone=${country}`;
+  getTimezone(term: string): Observable<Timezone> {
+    let url = '';
+
+    const countrySearched = data.find(country => country["country"].toLowerCase() === term.toLowerCase())
+
+    if (countrySearched) {
+      const urlTerm = countrySearched["zone"];
+      url = `${this.apiUrl}&zone=${urlTerm}`;
+    }
 
     return this.http.get<Timezone>(url);
   }
