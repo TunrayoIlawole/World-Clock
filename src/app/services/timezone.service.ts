@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Timezone } from '../Timezone';
 import data from 'data.json';
+
+import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,21 @@ import data from 'data.json';
 export class TimezoneService {
   private apiUrl = 'http://api.timezonedb.com/v2.1/get-time-zone?key=60E56NWFFEPG&format=json&by=zone';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService) { }
+
+  private log(message: string) {
+    this.messageService.add(`TimezoneService: ${message}`);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      this.log(`${operation} failed: Something went wrong. Please try again`);
+
+      return of(result as T);
+    }
+  }
 
   getTimezone(term: string): Observable<Timezone> {
     let url = '';
@@ -22,7 +39,11 @@ export class TimezoneService {
       url = `${this.apiUrl}&zone=${urlTerm}`;
     }
 
-    return this.http.get<Timezone>(url);
+    return this.http.get<Timezone>(url)
+    .pipe(
+      tap(_ => this.log('fetched heroes')),
+      catchError(this.handleError<Timezone>('getTimezone'))
+    );
   }
 
 
