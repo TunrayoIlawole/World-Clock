@@ -1,0 +1,13 @@
+<div class = "main">
+    <form class = "search-component" (ngSubmit) = "search(searchBox.value); searchBox.value = ''">
+        <input id = "search-box" #searchBox placeholder = "Search for a country" />
+    </form>
+
+    <!-- <ul class = "search-result">
+        <li *ngFor = "let zone of zones$ | async">
+            <p>{{zone.countryName}}</p>
+        </li>
+    </ul> -->
+
+    <app-country-details [data] = "timezoneData"></app-country-details>
+</div>

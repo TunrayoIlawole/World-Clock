@@ -1,0 +1,20 @@
+.main {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+.search-component {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+/* 60E56NWFFEPG */
+
+/* http://api.timezonedb.com/v2.1/get-time-zone?key=60E56NWFFEPG&format=json&by=zone&zone=${zone}&fields=formatted */
